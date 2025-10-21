@@ -1,10 +1,3 @@
-
-using CareerPath.Data;
-using CareerPath.Services.Abstraction;
-using CareerPath.Services.Implemintation;
-using CareerPath.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
-
 namespace CareerPath
 {
     public class Program
@@ -14,22 +7,16 @@ namespace CareerPath
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDependencies(builder.Configuration);
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
-            builder.Services.AddDbContext<MyContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddScoped<IUnitWork, UnitWork>();
-            builder.Services.AddScoped<IJopAppServices, JopAppServices>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-                app.UseSwaggerUI(options => { options.SwaggerEndpoint("/openapi/v1.json", "careerPath V1"); });
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            app.MapOpenApi();
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/openapi/v1.json", "careerPath V1"); });
+            //}
 
             app.UseHttpsRedirection();
 

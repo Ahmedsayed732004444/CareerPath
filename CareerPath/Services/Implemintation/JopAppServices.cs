@@ -10,10 +10,10 @@ namespace CareerPath.Services.Implemintation
         public async Task<IEnumerable<GetAllJopAppResponse?>> GetAllJopAppAsync()
         {
             return await _unitWork.JopAppRepository.GetAll().AsNoTracking().Select(J => new GetAllJopAppResponse
-            {
-                ID = J.ID,
-                Titel = J.Titel
-            }).ToListAsync();
+            (
+                 J.ID,
+                 J.Titel
+            )).ToListAsync();
         }
     }
 }
